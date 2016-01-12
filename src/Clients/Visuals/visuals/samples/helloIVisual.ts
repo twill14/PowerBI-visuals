@@ -35,7 +35,7 @@ module powerbi.visuals.samples {
         toolTipInfo: TooltipDataItem[];
     }
 
-    export class HelloIVisuals implements IVisual {
+    export class HelloIVisual implements IVisual {
         public static capabilities: VisualCapabilities = {
             dataRoles: [{
                 name: 'Values',
@@ -74,10 +74,10 @@ module powerbi.visuals.samples {
         private selectiionManager: SelectionManager;
 
         public static converter(dataView: DataView): HelloViewModel {
-            var viewModels: HelloViewModel = {
-                size: HelloIVisuals.getSize(dataView),
-                color: HelloIVisuals.getFill(dataView).solid.color,
-                text: HelloIVisuals.DefaultText,
+            var viewModel: HelloViewModel = {
+                size: HelloIVisual.getSize(dataView),
+                color: HelloIVisual.getFill(dataView).solid.color,
+                text: HelloIVisual.DefaultText,
                 toolTipInfo: [{
                     displayName: 'Test',
                     value: '1...2....3... can you see me? I am sending random strings to the tooltip',
@@ -85,16 +85,16 @@ module powerbi.visuals.samples {
                 selector: SelectionId.createNull().getSelector()
             };
             var table = dataView.table;
-            if (!table) return viewModels;
+            if (!table) return viewModel;
 
-            viewModels.text = table.rows[0][0];
+            viewModel.text = table.rows[0][0];
             if (dataView.categorical) {
-                viewModels.selector = dataView.categorical.categories[0].identity
+                viewModel.selector = dataView.categorical.categories[0].identity
                     ? SelectionId.createWithId(dataView.categorical.categories[0].identity[0]).getSelector()
                     : SelectionId.createNull().getSelector();
             }
 
-            return viewModels;
+            return viewModel;
         }
 
         public init(options: VisualInitOptions): void {
@@ -116,7 +116,7 @@ module powerbi.visuals.samples {
             if (!options.dataViews && !options.dataViews[0]) return;
             var dataView = this.dataView = options.dataViews[0];
             var viewport = options.viewport;
-            var viewModel: HelloViewModel = HelloIVisuals.converter(dataView);
+            var viewModel: HelloViewModel = HelloIVisual.converter(dataView);
 
             this.root.attr({
                 'height': viewport.height,
@@ -189,8 +189,8 @@ module powerbi.visuals.samples {
                         displayName: 'General',
                         selector: null,
                         properties: {
-                            fill: HelloIVisuals.getFill(dataView),
-                            size: HelloIVisuals.getSize(dataView)
+                            fill: HelloIVisual.getFill(dataView),
+                            size: HelloIVisual.getSize(dataView)
                         }
                     };
                     instances.push(general);

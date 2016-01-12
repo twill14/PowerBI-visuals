@@ -44,8 +44,8 @@ module powerbi.visuals {
         dataWasCulled: boolean;
     }
     
-    
-    /* * Treemap node (we extend D3 node (GraphNode) because treemap layout methods rely on the type).
+    /**
+     * Treemap node (we extend D3 node (GraphNode) because treemap layout methods rely on the type).
      */
     export interface TreemapNode extends D3.Layout.GraphNode, SelectableDataPoint, TooltipEnabledDataPoint, LabelEnabledDataPoint {
         key: any;
@@ -98,7 +98,7 @@ module powerbi.visuals {
     
     /**
      * Renders an interactive treemap visual from categorical data.
-*/
+     */
     export class Treemap implements IVisual, IInteractiveVisual {
         public static DimmedShapeOpacity = 0.4;
 
@@ -145,7 +145,7 @@ module powerbi.visuals {
         
         /**
          * Note: Public for testing.
-        */
+         */
         public animator: ITreemapAnimator;
         private interactivityService: IInteractivityService;
 
@@ -645,8 +645,8 @@ module powerbi.visuals {
                     return (this.data)
                         ? dataLabelUtils.enumerateCategoryLabels(this.data.dataLabelsSettings, false /*withFill*/, false /*isDonutChart*/, true /*isTreeMap*/)
                         : dataLabelUtils.enumerateCategoryLabels(null, false /*withFill*/, false /*isDonutChart*/, true /*isTreeMap*/);
-           }
-       }
+            }
+        }
 
         private enumerateDataPoints(data: TreemapData): VisualObjectInstance[] {
             var rootChildren = data.root.children;

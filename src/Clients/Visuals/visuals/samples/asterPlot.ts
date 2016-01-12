@@ -25,15 +25,15 @@
  */
 
 /// <reference path="../../_references.ts"/>
-/*
+
 module powerbi.visuals.samples {
     export interface AsterDatapoint {
-        colorss: string;
-        sliceHeights: number;
-        sliceWidths: number;
-        labels: string;
-        selectors: data.Selector;
-        tooltipInfos: TooltipDataItem[];
+        color: string;
+        sliceHeight: number;
+        sliceWidth: number;
+        label: string;
+        selector: data.Selector;
+        tooltipInfo: TooltipDataItem[];
     }
 
     export class AsterPlot implements IVisual {
@@ -144,12 +144,12 @@ module powerbi.visuals.samples {
                 }
 
                 dataPoints.push({
-                    sliceHeights: values[0].values[i],
-                    sliceWidths: values.length > 1 ? values[1].values[i] : 1,
-                    labels: catValues[i],
-                    colorss: colors.getColorByIndex(i).value,
-                    selectors: SelectionId.createWithId(cat.identity[i]).getSelector(),
-                    tooltipInfos: tooltipInfo
+                    sliceHeight: values[0].values[i],
+                    sliceWidth: values.length > 1 ? values[1].values[i] : 1,
+                    label: catValues[i],
+                    color: colors.getColorByIndex(i).value,
+                    selector: SelectionId.createWithId(cat.identity[i]).getSelector(),
+                    tooltipInfo: tooltipInfo
                 });
             }
 
@@ -356,4 +356,3 @@ module powerbi.visuals.samples {
         }
     }
 }
-*/
