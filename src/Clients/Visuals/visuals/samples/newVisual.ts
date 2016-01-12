@@ -24,19 +24,19 @@
  *  THE SOFTWARE.
  */
 
+/* Please make sure that this path is correct */
 /// <reference path="../../_references.ts"/>
-/*
 module powerbi.visuals.samples {
-    export interface AsterDatapoint {
-        colorss: string;
-        sliceHeights: number;
-        sliceWidths: number;
-        labels: string;
-        selectors: data.Selector;
-        tooltipInfos: TooltipDataItem[];
+   export interface AsterDatapoint {
+        color: string;
+        sliceHeight: number;
+        sliceWidth: number;
+        label: string;
+        selector: data.Selector;
+        tooltipInfo: TooltipDataItem[];
     }
 
-    export class AsterPlot implements IVisual {
+    export class newVisual implements IVisual {
         public static capabilities: VisualCapabilities = {
             dataRoles: [
                 {
@@ -144,12 +144,12 @@ module powerbi.visuals.samples {
                 }
 
                 dataPoints.push({
-                    sliceHeights: values[0].values[i],
-                    sliceWidths: values.length > 1 ? values[1].values[i] : 1,
-                    labels: catValues[i],
-                    colorss: colors.getColorByIndex(i).value,
-                    selectors: SelectionId.createWithId(cat.identity[i]).getSelector(),
-                    tooltipInfos: tooltipInfo
+                    sliceHeight: values[0].values[i],
+                    sliceWidth: values.length > 1 ? values[1].values[i] : 1,
+                    label: catValues[i],
+                    color: colors.getColorByIndex(i).value,
+                    selector: SelectionId.createWithId(cat.identity[i]).getSelector(),
+                    tooltipInfo: tooltipInfo
                 });
             }
 
@@ -161,7 +161,7 @@ module powerbi.visuals.samples {
             this.selectionManager = new SelectionManager({ hostServices: options.host });
             var svg = this.svg = d3.select(element.get(0))
                 .append('svg')
-                .classed(AsterPlot.VisualClassName, true);
+                .classed(newVisual.VisualClassName, true);
 
             this.colors = options.style.colorPalette.dataColors;
             this.mainGroupElement = svg.append('g');
@@ -172,7 +172,7 @@ module powerbi.visuals.samples {
             if (!options.dataViews || !options.dataViews[0]) return; // or clear the view, display an error, etc.
             
             var dataView = this.dataView = options.dataViews[0];
-            var dataPoints = AsterPlot.converter(dataView, this.colors);
+            var dataPoints = newVisual.converter(dataView, this.colors);
             var duration = options.suppressAnimations ? 0 : AnimatorCommon.MinervaAnimationDuration;
             var viewport = options.viewport;
 
@@ -205,13 +205,13 @@ module powerbi.visuals.samples {
 
             var selectionManager = this.selectionManager;
 
-            var selection = mainGroup.selectAll(AsterPlot.AsterSlice.selector)
+            var selection = mainGroup.selectAll(newVisual.AsterSlice.selector)
                 .data(pie(dataPoints));
 
             selection.enter()
                 .append('path')
                 .attr('stroke', '#333')
-                .classed(AsterPlot.AsterSlice.class, true);
+                .classed(newVisual.AsterSlice.class, true);
 
             selection
                 .on('click', function (d) {
@@ -242,7 +242,7 @@ module powerbi.visuals.samples {
                 .innerRadius(innerRadius)
                 .outerRadius(radius);
             if (this.getShowOuterline(this.dataView)) {
-                var outerLine = mainGroup.selectAll(AsterPlot.OuterLine.selector).data(data);
+                var outerLine = mainGroup.selectAll(newVisual.OuterLine.selector).data(data);
                 outerLine.enter().append('path');
                 outerLine.attr("fill", "none")
                     .attr({
@@ -251,9 +251,9 @@ module powerbi.visuals.samples {
                         'd': outlineArc
                     })
                     .style('opacity', 1)
-                    .classed(AsterPlot.OuterLine.class, true);
+                    .classed(newVisual.OuterLine.class, true);
             } else {
-                mainGroup.selectAll(AsterPlot.OuterLine.selector).style('opacity', 0);
+                mainGroup.selectAll(newVisual.OuterLine.selector).style('opacity', 0);
             }
         }
 
@@ -356,4 +356,15 @@ module powerbi.visuals.samples {
         }
     }
 }
-*/
+/* Creating IVisualPlugin that is used to represent IVisual. */
+//
+// Uncomment it to see your plugin in "PowerBIVisualsPlayground" plugins list
+// Remember to finally move it to plugins.ts
+//
+/*module powerbi.visuals.plugins {
+    export var newVisual: IVisualPlugin = {
+        name: 'newVisual',
+        capabilities: newVisual.capabilities,
+        create: () => new newVisual()
+    };
+}*/

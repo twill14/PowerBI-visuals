@@ -1,41 +1,34 @@
-﻿/*
- *  Power BI Visualizations
- *
- *  Copyright (c) Microsoft Corporation
- *  All rights reserved. 
- *  MIT License
- *
- *  Permission is hereby granted, free of charge, to any person obtaining a copy
- *  of this software and associated documentation files (the ""Software""), to deal
- *  in the Software without restriction, including without limitation the rights
- *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- *  copies of the Software, and to permit persons to whom the Software is
- *  furnished to do so, subject to the following conditions:
- *   
- *  The above copyright notice and this permission notice shall be included in 
- *  all copies or substantial portions of the Software.
- *   
- *  THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- *  THE SOFTWARE.
- */
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
 
-/// <reference path="../../_references.ts"/>
-
-module powerbi.visuals.samples {
+    <link href="visuals.css" rel="stylesheet">
+    <script type="text/javascript" src="externals.min.js"></script>  
+    <script type="text/javascript" src="powerbi-visuals.js"></script>  
+    <style>
+        .visual {
+            'background-color' : 'white',
+            'padding' : '10px',
+            'margin' : '5px'
+        }
+    </style>
+</head>
+<body>
+<div class="visual"></div>
+<script>
+   module powerbi.visuals.samples {
+    import SelectionManager = utility.SelectionManager;
     export interface HelloViewModel {
         text: string;
         color: string;
         size: number;
-        selector: data.Selector;
+        selector: SelectionId;
         toolTipInfo: TooltipDataItem[];
     }
 
-    export class HelloIVisuals implements IVisual {
+    export class HelloIVisual implements IVisual {
         public static capabilities: VisualCapabilities = {
             dataRoles: [{
                 name: 'Values',
@@ -74,27 +67,27 @@ module powerbi.visuals.samples {
         private selectiionManager: SelectionManager;
 
         public static converter(dataView: DataView): HelloViewModel {
-            var viewModels: HelloViewModel = {
-                size: HelloIVisuals.getSize(dataView),
-                color: HelloIVisuals.getFill(dataView).solid.color,
-                text: HelloIVisuals.DefaultText,
+            var viewModel: HelloViewModel = {
+                size: HelloIVisual.getSize(dataView),
+                color: HelloIVisual.getFill(dataView).solid.color,
+                text: HelloIVisual.DefaultText,
                 toolTipInfo: [{
                     displayName: 'Test',
                     value: '1...2....3... can you see me? I am sending random strings to the tooltip',
                 }],
-                selector: SelectionId.createNull().getSelector()
+                selector: SelectionId.createNull()
             };
             var table = dataView.table;
-            if (!table) return viewModels;
+            if (!table) return viewModel;
 
-            viewModels.text = table.rows[0][0];
+            viewModel.text = table.rows[0][0];
             if (dataView.categorical) {
-                viewModels.selector = dataView.categorical.categories[0].identity
-                    ? SelectionId.createWithId(dataView.categorical.categories[0].identity[0]).getSelector()
-                    : SelectionId.createNull().getSelector();
+                viewModel.selector = dataView.categorical.categories[0].identity
+                    ? SelectionId.createWithId(dataView.categorical.categories[0].identity[0])
+                    : SelectionId.createNull();
             }
 
-            return viewModels;
+            return viewModel;
         }
 
         public init(options: VisualInitOptions): void {
@@ -116,7 +109,7 @@ module powerbi.visuals.samples {
             if (!options.dataViews && !options.dataViews[0]) return;
             var dataView = this.dataView = options.dataViews[0];
             var viewport = options.viewport;
-            var viewModel: HelloViewModel = HelloIVisuals.converter(dataView);
+            var viewModel: HelloViewModel = HelloIVisual.converter(dataView);
 
             this.root.attr({
                 'height': viewport.height,
@@ -189,8 +182,8 @@ module powerbi.visuals.samples {
                         displayName: 'General',
                         selector: null,
                         properties: {
-                            fill: HelloIVisuals.getFill(dataView),
-                            size: HelloIVisuals.getSize(dataView)
+                            fill: HelloIVisual.getFill(dataView),
+                            size: HelloIVisual.getSize(dataView)
                         }
                     };
                     instances.push(general);
@@ -205,3 +198,7 @@ module powerbi.visuals.samples {
         }
     }
 }
+</script>
+
+</body>
+</html>

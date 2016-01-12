@@ -147,8 +147,8 @@ module powerbi.visuals {
                             type: { bool: true }
                         },
                         axisStyle: {
-                            displayName: data.createDisplayNameGetter('Visual_Axis_Style'),                            
-                            type: { formatting: { axisStyle: true } }
+                            displayName: data.createDisplayNameGetter('Visual_Axis_Style'),
+                            type: { formatting: { axisStyle: true } } 
                         }
 
                     }

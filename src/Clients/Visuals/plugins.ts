@@ -284,20 +284,25 @@ module powerbi.visuals.plugins {
 
     export var helloIVisual: IVisualPlugin = {
         name: 'helloIVisual',
-        capabilities: samples.HelloIVisual.capabilities,
-        create: () => new samples.HelloIVisual()
+        capabilities: samples.HelloIVisuals.capabilities,
+        create: () => new samples.HelloIVisuals()
     };
 
-    export var asterPlot: IVisualPlugin = {
+    /*export var asterPlot: IVisualPlugin = {
         name: 'asterPlot',
         capabilities: samples.AsterPlot.capabilities,
         create: () => new samples.AsterPlot()
     };
-
+    */
     export var owlGauge: IVisualPlugin = {
         name: 'owlGauge',
         watermarkKey: 'gauge',
         capabilities: OwlGauge.capabilities,
         create: () => new OwlGauge()
     };
+    export var newVisual: IVisualPlugin = {
+          name: 'newVisual',
+          capabilities: samples.newVisual.capabilities,
+          create: () => new samples.newVisual()
+      };
 }
